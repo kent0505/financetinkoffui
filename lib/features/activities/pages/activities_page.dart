@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/utils.dart';
+import '../../../core/widgets/others/divider_widget.dart';
 import '../../../core/widgets/texts/text_r.dart';
 import '../widgets/expense_income_chart.dart';
 
@@ -35,14 +37,20 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const TextM('Activities', fontSize: 20),
-        const SizedBox(height: 100),
+        SizedBox(height: 35 + getStatusBar(context)),
+        const Center(child: TextR('Activities', fontSize: 24)),
+        const SizedBox(height: 25),
+        const DividerWidget(),
+        const SizedBox(height: 25),
+        // tab
+        const SizedBox(height: 53),
         ExpenseIncomeChart(
           data: [
             Money(date: DateTime.now(), amount: 100, isIncome: true),
             Money(date: DateTime.now(), amount: 30, isIncome: false),
           ],
         ),
+        const SizedBox(height: 10),
       ],
     );
   }

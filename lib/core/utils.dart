@@ -74,3 +74,11 @@ void logger(Object message) {
     debugPrint(e.toString());
   }
 }
+
+String formatTimer(int totalMinutes) {
+  int hours = totalMinutes ~/ 60;
+  int minutes = totalMinutes % 60;
+  String formattedHours = hours.toString();
+  String formattedMinutes = minutes.toString().padLeft(2, '0');
+  return '$formattedHours:$formattedMinutes';
+}

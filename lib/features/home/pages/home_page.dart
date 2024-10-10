@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/widgets/custom_scaffold.dart';
-
 import '../../activities/pages/activities_page.dart';
 import '../../question/pages/question_page.dart';
 import '../bloc/home_bloc.dart';
@@ -18,16 +17,19 @@ class HomePage extends StatelessWidget {
     return CustomScaffold(
       body: Stack(
         children: [
-          BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              if (state is HomeSettings) return const SettingsPage();
+          Padding(
+            padding: const EdgeInsets.only(bottom: 95),
+            child: BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                if (state is HomeSettings) return const SettingsPage();
 
-              if (state is HomeQuestion) return const QuestionPage();
+                if (state is HomeQuestion) return const QuestionPage();
 
-              if (state is HomeActivities) return const ActivitiesPage();
+                if (state is HomeActivities) return const ActivitiesPage();
 
-              return const MainPage();
-            },
+                return const MainPage();
+              },
+            ),
           ),
           const NavBar(),
         ],
