@@ -82,3 +82,18 @@ String formatTimer(int totalMinutes) {
   String formattedMinutes = minutes.toString().padLeft(2, '0');
   return '$formattedHours:$formattedMinutes';
 }
+
+String getCategoryAsset(String cat) {
+  if (cat == 'Salary') return 'assets/cat1.svg';
+  if (cat == 'Passive') return 'assets/cat2.svg';
+  if (cat == 'Investment') return 'assets/cat3.svg';
+  if (cat == 'Dividends') return 'assets/cat4.svg';
+  if (cat == 'Business') return 'assets/cat5.svg';
+  if (cat == 'Rent') return 'assets/cat6.svg';
+  if (cat == 'Investment') return 'assets/cat7.svg';
+  if (cat == 'Food') return 'assets/cat8.svg';
+  if (cat == 'Transport') return 'assets/cat9.svg';
+  if (cat == 'Rest') return 'assets/cat10.svg';
+  if (cat == 'Procuerement') return 'assets/cat11.svg';
+  return 'assets/cat1.svg';
+}

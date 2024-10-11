@@ -6,6 +6,7 @@ import 'core/config/router.dart';
 import 'core/config/themes.dart';
 import 'core/db/db.dart';
 import 'features/home/bloc/home_bloc.dart';
+import 'features/money/bloc/money_bloc.dart';
 
 void main() async {
   await initHive();
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => HomeBloc()),
+        BlocProvider(create: (context) => MoneyBloc()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

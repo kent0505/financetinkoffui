@@ -38,10 +38,10 @@ class PrimaryButton extends StatelessWidget {
             color: active
                 ? white
                     ? AppColors.black
-                    : AppColors.white50
+                    : AppColors.black
                 : white
                     ? AppColors.white50
-                    : AppColors.black,
+                    : AppColors.black10,
           ),
         ),
       ),

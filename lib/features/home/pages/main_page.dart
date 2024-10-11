@@ -1,13 +1,15 @@
-import 'package:financetinkoffui/core/config/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/utils.dart';
 import '../../../core/widgets/others/divider_widget.dart';
 import '../../../core/widgets/texts/text_r.dart';
+import '../../money/bloc/money_bloc.dart';
 import '../../money/pages/money_add_page.dart';
 import '../widgets/home_button.dart';
 import '../widgets/home_title.dart';
+import '../widgets/money_card.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -22,7 +24,7 @@ class _MainPageState extends State<MainPage> {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      backgroundColor: AppColors.white75,
+      backgroundColor: const Color(0xfffef6ca),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
       ),
@@ -98,7 +100,28 @@ class _MainPageState extends State<MainPage> {
         ),
         const SizedBox(height: 4),
         const DividerWidget(),
-        const SizedBox(height: 22),
+        const SizedBox(height: 11),
+        BlocBuilder<MoneyBloc, MoneyState>(
+          builder: (context, state) {
+            if (state is MoneyLoadedState) {
+              return Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  children: [
+                    const SizedBox(height: 11),
+                    ...List.generate(
+                      state.money.length,
+                      (index) {
+                        return MoneyCard(money: state.money[index]);
+                      },
+                    ),
+                  ],
+                ),
+              );
+            }
+            return Container();
+          },
+        ),
       ],
     );
   }
