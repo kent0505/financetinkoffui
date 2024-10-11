@@ -87,6 +87,7 @@ class _DayChartState extends State<DayChart> {
                       sideTitles: SideTitles(),
                     ),
                   ),
+                  barTouchData: BarTouchData(enabled: false),
                   barGroups: [
                     BarChartGroupData(
                       x: 0,

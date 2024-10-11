@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -23,9 +25,6 @@ class _MonthChartState extends State<MonthChart> {
     DateTime today = DateTime.now();
     int currentMonth = today.month;
 
-    // Get start date of the month
-    // DateTime startOfMonth = DateTime(today.year, currentMonth, 1);
-
     // Grouping data by weeks
     for (Money money in DB.moneyList) {
       DateTime date = DateTime.fromMillisecondsSinceEpoch(money.id * 1000);
@@ -39,14 +38,15 @@ class _MonthChartState extends State<MonthChart> {
       }
     }
 
-    // Normalize values for each week
+    int maxWeekly = 0;
     for (int i = 0; i < 4; i++) {
-      int maxValue = weeklyIncomes[i] > weeklyExpenses[i]
-          ? weeklyIncomes[i]
-          : weeklyExpenses[i];
-      if (maxValue > 0) {
-        normalizedIncomes[i] = ((weeklyIncomes[i] / maxValue) * 104).round();
-        normalizedExpenses[i] = ((weeklyExpenses[i] / maxValue) * 104).round();
+      maxWeekly = max(maxWeekly, max(weeklyIncomes[i], weeklyExpenses[i]));
+    }
+
+    for (int i = 0; i < 4; i++) {
+      if (maxWeekly > 0) {
+        normalizedIncomes[i] = ((weeklyIncomes[i] / maxWeekly) * 104).round();
+        normalizedExpenses[i] = ((weeklyExpenses[i] / maxWeekly) * 104).round();
       }
     }
   }
@@ -90,6 +90,7 @@ class _MonthChartState extends State<MonthChart> {
                       sideTitles: SideTitles(showTitles: false),
                     ),
                   ),
+                  barTouchData: BarTouchData(enabled: false),
                   barGroups: List.generate(4, (index) {
                     return BarChartGroupData(
                       x: index,

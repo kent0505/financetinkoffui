@@ -42,6 +42,48 @@ Future<void> updateMoney() async {
 
 List<Money> testMoney = [
   Money(
+    id: getCurrentTimestamp() - 86400 * 4,
+    title: '',
+    amount: 2000,
+    category: '',
+    expense: true,
+  ),
+  Money(
+    id: getCurrentTimestamp() - 86400 * 4,
+    title: '',
+    amount: 4000,
+    category: '',
+    expense: false,
+  ),
+  Money(
+    id: getCurrentTimestamp() - 86400 * 3,
+    title: '',
+    amount: 8000,
+    category: '',
+    expense: true,
+  ),
+  Money(
+    id: getCurrentTimestamp() - 86400 * 3,
+    title: '',
+    amount: 4000,
+    category: '',
+    expense: false,
+  ),
+  Money(
+    id: getCurrentTimestamp() - 86400 * 2,
+    title: '',
+    amount: 1000,
+    category: '',
+    expense: true,
+  ),
+  Money(
+    id: getCurrentTimestamp() - 86400 * 2,
+    title: '',
+    amount: 2000,
+    category: '',
+    expense: false,
+  ),
+  Money(
     id: getCurrentTimestamp() - 86400,
     title: '',
     amount: 1000,
@@ -51,7 +93,7 @@ List<Money> testMoney = [
   Money(
     id: getCurrentTimestamp() - 86400,
     title: '',
-    amount: 2000,
+    amount: 3000,
     category: '',
     expense: false,
   ),
