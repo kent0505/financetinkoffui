@@ -7,7 +7,6 @@ import '../../../core/widgets/texts/text_r.dart';
 import '../../money/bloc/money_bloc.dart';
 import '../../money/pages/money_add_page.dart';
 import '../widgets/default_widget.dart';
-import '../widgets/exchange_widget.dart';
 import '../widgets/history_widget.dart';
 import '../widgets/home_button.dart';
 import '../widgets/home_title.dart';
@@ -20,18 +19,11 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  bool exchange = false;
   bool history = false;
 
-  void changeTab(bool h) {
+  void changeTab() {
     setState(() {
-      if (h) {
-        history = !history;
-        exchange = false;
-      } else {
-        exchange = !exchange;
-        history = false;
-      }
+      history = !history;
     });
   }
 
@@ -100,33 +92,19 @@ class _MainPageState extends State<MainPage> {
         Row(
           children: [
             const SizedBox(width: 30),
-            HomeButton(
-              id: 3,
-              title: 'Exchange',
-              active: exchange,
-              onPressed: () {
-                changeTab(false);
-              },
-            ),
+            const Spacer(),
             const SizedBox(width: 40),
             HomeButton(
               id: 4,
               title: 'History',
               active: history,
-              onPressed: () {
-                changeTab(true);
-              },
+              onPressed: changeTab,
             ),
             const SizedBox(width: 30),
           ],
         ),
         const SizedBox(height: 50),
-        if (history)
-          const HistoryWidget()
-        else if (exchange)
-          const ExchangeWidget()
-        else
-          const DefaultWidget(),
+        if (history) const HistoryWidget() else const DefaultWidget(),
       ],
     );
   }
