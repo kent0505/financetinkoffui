@@ -25,7 +25,6 @@ class _MonthChartState extends State<MonthChart> {
     DateTime today = DateTime.now();
     int currentMonth = today.month;
 
-    // Grouping data by weeks
     for (Money money in DB.moneyList) {
       DateTime date = DateTime.fromMillisecondsSinceEpoch(money.id * 1000);
       if (date.year == today.year && date.month == currentMonth) {

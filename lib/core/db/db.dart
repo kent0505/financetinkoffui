@@ -12,7 +12,7 @@ class DB {
 Future<void> initHive() async {
   try {
     await Hive.initFlutter();
-    await Hive.deleteBoxFromDisk(DB.boxName);
+    // await Hive.deleteBoxFromDisk(DB.boxName);
     Hive.registerAdapter(MoneyAdapter());
   } catch (e) {
     logger(e);
@@ -22,7 +22,7 @@ Future<void> initHive() async {
 Future<void> getMoney() async {
   try {
     final box = await Hive.openBox(DB.boxName);
-    List data = box.get(DB.keyName) ?? testMoney;
+    List data = box.get(DB.keyName) ?? [];
     DB.moneyList = data.cast<Money>();
     logger(DB.moneyList.length);
   } catch (e) {
