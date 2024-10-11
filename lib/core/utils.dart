@@ -116,3 +116,9 @@ String getCategoryAsset(String cat) {
   if (cat == 'Procuerement') return 'assets/cat11.svg';
   return 'assets/cat1.svg';
 }
+
+String getWeekdayAbbreviation() {
+  DateTime today = DateTime.now();
+  List<String> weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  return weekdays[today.weekday - 1];
+}

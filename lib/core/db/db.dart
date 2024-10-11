@@ -12,7 +12,7 @@ class DB {
 Future<void> initHive() async {
   try {
     await Hive.initFlutter();
-    // await Hive.deleteBoxFromDisk(DB.boxName);
+    await Hive.deleteBoxFromDisk(DB.boxName);
     Hive.registerAdapter(MoneyAdapter());
   } catch (e) {
     logger(e);
@@ -22,7 +22,7 @@ Future<void> initHive() async {
 Future<void> getMoney() async {
   try {
     final box = await Hive.openBox(DB.boxName);
-    List data = box.get(DB.keyName) ?? [];
+    List data = box.get(DB.keyName) ?? testMoney;
     DB.moneyList = data.cast<Money>();
     logger(DB.moneyList.length);
   } catch (e) {
@@ -39,3 +39,34 @@ Future<void> updateMoney() async {
     logger(e);
   }
 }
+
+List<Money> testMoney = [
+  Money(
+    id: getCurrentTimestamp() - 86400,
+    title: '',
+    amount: 1000,
+    category: '',
+    expense: true,
+  ),
+  Money(
+    id: getCurrentTimestamp() - 86400,
+    title: '',
+    amount: 2000,
+    category: '',
+    expense: false,
+  ),
+  Money(
+    id: getCurrentTimestamp(),
+    title: '',
+    amount: 3000,
+    category: '',
+    expense: true,
+  ),
+  Money(
+    id: getCurrentTimestamp(),
+    title: '',
+    amount: 4000,
+    category: '',
+    expense: false,
+  ),
+];

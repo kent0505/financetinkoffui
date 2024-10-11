@@ -1,29 +1,61 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 import '../../../core/config/app_colors.dart';
+import '../../../core/db/db.dart';
 import '../../../core/models/money.dart';
+import '../../../core/utils.dart';
 import '../../../core/widgets/texts/text_r.dart';
 
-class ExpenseIncomeChart extends StatelessWidget {
-  final List<Money> data;
+class DayChart extends StatefulWidget {
+  const DayChart({super.key});
 
-  const ExpenseIncomeChart({super.key, required this.data});
+  @override
+  State<DayChart> createState() => _DayChartState();
+}
+
+class _DayChartState extends State<DayChart> {
+  int expenses = 0;
+  int incomes = 0;
+  int normalizedIncome = 0;
+  int normalizedExpense = 0;
+
+  void getTodaysMoney() {
+    DateTime today = DateTime.now();
+    List<Money> todaysMoneys = [];
+    for (Money money in DB.moneyList) {
+      DateTime date = DateTime.fromMillisecondsSinceEpoch(money.id * 1000);
+      if (date.year == today.year &&
+          date.month == today.month &&
+          date.day == today.day) {
+        todaysMoneys.add(money);
+      }
+    }
+    for (Money money in todaysMoneys) {
+      if (money.expense) {
+        expenses += money.amount;
+      } else {
+        incomes += money.amount;
+      }
+    }
+    int maxValue = incomes > expenses ? incomes : expenses;
+    if (maxValue == 0) {
+      normalizedIncome = 0;
+      normalizedExpense = 0;
+    } else {
+      normalizedIncome = ((incomes / maxValue) * 104).round();
+      normalizedExpense = ((expenses / maxValue) * 104).round();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getTodaysMoney();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // double totalIncome =
-    //     data.where((d) => d.isIncome).fold(0, (sum, item) => sum + item.amount);
-    // double totalExpense = data
-    //     .where((d) => !d.isIncome)
-    //     .fold(0, (sum, item) => sum + item.amount);
-
-    // double maxValue = totalIncome > totalExpense ? totalIncome : totalExpense;
-
-    // double normalizedIncome = maxValue > 0 ? (totalIncome / maxValue) * 104 : 0;
-    // double normalizedExpense =
-    //     maxValue > 0 ? (totalExpense / maxValue) * 104 : 0;
-
     return Center(
       child: Container(
         height: 285,
@@ -67,12 +99,11 @@ class ExpenseIncomeChart extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         BarChartRodData(
-                          toY: 111,
+                          toY: normalizedIncome.toDouble(),
                           width: 17,
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        // Background bar (always displayed with #CDCDCD color)
                         BarChartRodData(
                           toY: -104,
                           width: 17,
@@ -80,7 +111,7 @@ class ExpenseIncomeChart extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         BarChartRodData(
-                          toY: -111,
+                          toY: -normalizedExpense.toDouble(),
                           width: 17,
                           color: const Color(0xFF1F1F1F),
                           borderRadius: BorderRadius.circular(8),
@@ -93,10 +124,10 @@ class ExpenseIncomeChart extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 25),
-            const TextB(
-              'Mon',
+            TextB(
+              getWeekdayAbbreviation(),
               fontSize: 11,
-              color: Color(0xff505050),
+              color: const Color(0xff505050),
             ),
             const SizedBox(height: 8),
           ],
