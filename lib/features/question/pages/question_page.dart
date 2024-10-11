@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:financetinkoffui/core/models/question.dart';
-import 'package:financetinkoffui/features/question/widgets/answer_card.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/models/question.dart';
 import '../../../core/utils.dart';
 import '../../../core/widgets/others/divider_widget.dart';
 import '../../../core/widgets/texts/text_r.dart';
+import '../widgets/answer_card.dart';
 import '../widgets/correct_answers_dialog.dart';
 import '../widgets/timer_card.dart';
 
@@ -21,7 +21,7 @@ class QuestionPage extends StatefulWidget {
 class _QuestionPageState extends State<QuestionPage> {
   int index = 0;
   int correctAnswers = 0;
-  int seconds = 10;
+  int seconds = 20;
   bool canTap = true;
   Timer? _timer;
 
@@ -30,7 +30,7 @@ class _QuestionPageState extends State<QuestionPage> {
     setState(() {
       index = 0;
       correctAnswers = 0;
-      seconds = 10;
+      seconds = 20;
     });
     startTimer();
   }
@@ -59,7 +59,7 @@ class _QuestionPageState extends State<QuestionPage> {
               );
             }
           } else {
-            seconds = 10;
+            seconds = 20;
             index++;
             setState(() {});
             startTimer();
@@ -80,7 +80,7 @@ class _QuestionPageState extends State<QuestionPage> {
     canTap = false;
     setState(() {});
     Future.delayed(const Duration(seconds: 1), () {
-      seconds = 10;
+      seconds = 20;
       canTap = true;
       answer.active = false;
       startTimer();

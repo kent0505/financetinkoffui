@@ -61,7 +61,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
             const SizedBox(width: 30),
           ],
         ),
-        const SizedBox(height: 53),
+        const Spacer(),
         if (index == 1)
           const DayChart()
         else if (index == 2)
@@ -103,7 +103,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
             ),
           ],
         ),
-        const SizedBox(height: 50),
+        const Spacer(),
         Row(
           children: [
             const SizedBox(width: 30),
@@ -168,6 +168,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
           'assets/line.svg',
           fit: BoxFit.cover,
         ),
+        const Spacer(),
       ],
     );
   }
