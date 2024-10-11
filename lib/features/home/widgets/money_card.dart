@@ -1,27 +1,29 @@
-import 'package:financetinkoffui/core/widgets/buttons/cuper_button.dart';
-import 'package:financetinkoffui/features/money/pages/money_edit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/config/app_colors.dart';
 import '../../../core/models/money.dart';
 import '../../../core/utils.dart';
+import '../../../core/widgets/buttons/cuper_button.dart';
 import '../../../core/widgets/texts/text_r.dart';
+import '../../money/pages/money_edit_page.dart';
 
 class MoneyCard extends StatelessWidget {
   const MoneyCard({
     super.key,
     required this.money,
+    this.bottom = 22,
   });
 
   final Money money;
+  final double bottom;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 74,
       width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 22),
+      margin: EdgeInsets.only(bottom: bottom),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(10),

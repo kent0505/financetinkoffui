@@ -1,7 +1,10 @@
 import 'dart:developer' as developer;
 
+import 'package:financetinkoffui/core/models/money.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import 'db/db.dart';
 
 int getCurrentTimestamp() {
   return DateTime.now().millisecondsSinceEpoch ~/ 1000;
@@ -73,6 +76,22 @@ void logger(Object message) {
   } catch (e) {
     debugPrint(e.toString());
   }
+}
+
+int totalIncomes = 0;
+int totalExpense = 0;
+
+String getTotalBalance() {
+  totalIncomes = 0;
+  totalExpense = 0;
+  for (Money money in DB.moneyList) {
+    if (money.expense) {
+      totalExpense += money.amount;
+    } else {
+      totalIncomes += money.amount;
+    }
+  }
+  return NumberFormat('#,###').format(totalIncomes - totalExpense);
 }
 
 String formatTimer(int totalMinutes) {

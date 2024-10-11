@@ -9,15 +9,15 @@ class HomeTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       children: [
-        const SizedBox(width: 40),
-        const TextR('Your Balance', fontSize: 24),
-        const Spacer(),
+        SizedBox(width: 40),
+        TextR('Your Balance', fontSize: 24),
+        Spacer(),
         CuperButton(
-          onPressed: () {},
+          onPressed: null,
           minSize: 20,
-          child: const Text(
+          child: Text(
             'History',
             style: TextStyle(
               color: AppColors.black,
@@ -27,7 +27,7 @@ class HomeTitle extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 22),
+        SizedBox(width: 22),
       ],
     );
   }

@@ -1,16 +1,16 @@
-import 'package:financetinkoffui/core/widgets/others/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/utils.dart';
 import '../../../core/widgets/others/divider_widget.dart';
 import '../../../core/widgets/texts/text_r.dart';
 import '../../money/bloc/money_bloc.dart';
 import '../../money/pages/money_add_page.dart';
+import '../widgets/default_widget.dart';
+import '../widgets/exchange_widget.dart';
+import '../widgets/history_widget.dart';
 import '../widgets/home_button.dart';
 import '../widgets/home_title.dart';
-import '../widgets/money_card.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -20,6 +20,21 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  bool exchange = false;
+  bool history = false;
+
+  void changeTab(bool h) {
+    setState(() {
+      if (h) {
+        history = !history;
+        exchange = false;
+      } else {
+        exchange = !exchange;
+        history = false;
+      }
+    });
+  }
+
   void onAdd(bool expense) {
     showModalBottomSheet(
       context: context,
@@ -42,11 +57,20 @@ class _MainPageState extends State<MainPage> {
         SizedBox(height: 35 + getStatusBar(context)),
         const HomeTitle(),
         const SizedBox(height: 18),
-        const Row(
-          children: [
-            SizedBox(width: 40),
-            TextB('18,000', fontSize: 28),
-          ],
+        BlocBuilder<MoneyBloc, MoneyState>(
+          builder: (context, state) {
+            return Row(
+              children: [
+                const SizedBox(width: 40),
+                TextB('\$ ${getTotalBalance()}.', fontSize: 28),
+                const TextB(
+                  ' 00',
+                  fontSize: 28,
+                  color: Color(0xffaeaeae),
+                ),
+              ],
+            );
+          },
         ),
         const SizedBox(height: 18),
         const DividerWidget(),
@@ -79,54 +103,30 @@ class _MainPageState extends State<MainPage> {
             HomeButton(
               id: 3,
               title: 'Exchange',
-              onPressed: () {},
+              active: exchange,
+              onPressed: () {
+                changeTab(false);
+              },
             ),
             const SizedBox(width: 40),
             HomeButton(
               id: 4,
               title: 'History',
-              onPressed: () {},
+              active: history,
+              onPressed: () {
+                changeTab(true);
+              },
             ),
             const SizedBox(width: 30),
           ],
         ),
         const SizedBox(height: 50),
-        Row(
-          children: [
-            const SizedBox(width: 34),
-            SvgPicture.asset('assets/home4.svg'),
-            const SizedBox(width: 13),
-            const TextR('History', fontSize: 18),
-          ],
-        ),
-        const SizedBox(height: 4),
-        const DividerWidget(),
-        const SizedBox(height: 11),
-        BlocBuilder<MoneyBloc, MoneyState>(
-          builder: (context, state) {
-            if (state is MoneyLoadedState) {
-              if (state.money.isEmpty) {
-                return const NoData();
-              }
-
-              return Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  children: [
-                    const SizedBox(height: 11),
-                    ...List.generate(
-                      state.money.length,
-                      (index) {
-                        return MoneyCard(money: state.money[index]);
-                      },
-                    ),
-                  ],
-                ),
-              );
-            }
-            return Container();
-          },
-        ),
+        if (history)
+          const HistoryWidget()
+        else if (exchange)
+          const ExchangeWidget()
+        else
+          const DefaultWidget(),
       ],
     );
   }

@@ -10,11 +10,13 @@ class HomeButton extends StatelessWidget {
     super.key,
     required this.id,
     required this.title,
+    this.active = false,
     required this.onPressed,
   });
 
   final int id;
   final String title;
+  final bool active;
   final void Function() onPressed;
 
   @override
@@ -25,6 +27,12 @@ class HomeButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(7),
+          border: active
+              ? Border.all(
+                  color: AppColors.black,
+                  width: 1,
+                )
+              : null,
         ),
         child: CuperButton(
           onPressed: onPressed,
