@@ -3,29 +3,17 @@ import 'package:flutter/material.dart';
 import '../texts/text_r.dart';
 
 class NoData extends StatelessWidget {
-  const NoData({
-    super.key,
-    this.expanded = true,
-  });
-
-  final bool expanded;
+  const NoData({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return expanded
-        ? const Expanded(
-            child: Center(
-              child: TextB(
-                'No data',
-                fontSize: 14,
-              ),
-            ),
-          )
-        : const Center(
-            child: TextB(
-              'No data',
-              fontSize: 14,
-            ),
-          );
+    return const Expanded(
+      child: Center(
+        child: TextB(
+          'No data',
+          fontSize: 14,
+        ),
+      ),
+    );
   }
 }

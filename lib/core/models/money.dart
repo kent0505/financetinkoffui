@@ -11,14 +11,14 @@ class Money {
   @HiveField(3)
   String category;
   @HiveField(4)
-  bool income;
+  bool expense;
 
   Money({
     required this.id,
     required this.title,
     required this.amount,
     required this.category,
-    required this.income,
+    required this.expense,
   });
 }
 
@@ -33,7 +33,7 @@ class MoneyAdapter extends TypeAdapter<Money> {
       title: reader.read(),
       amount: reader.read(),
       category: reader.read(),
-      income: reader.read(),
+      expense: reader.read(),
     );
   }
 
@@ -43,6 +43,6 @@ class MoneyAdapter extends TypeAdapter<Money> {
     writer.write(obj.title);
     writer.write(obj.amount);
     writer.write(obj.category);
-    writer.write(obj.income);
+    writer.write(obj.expense);
   }
 }

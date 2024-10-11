@@ -24,6 +24,8 @@ class MoneyBloc extends Bloc<MoneyEvent, MoneyState> {
       for (Money money in DB.moneyList) {
         if (money.id == event.money.id) {
           money.title = event.money.title;
+          money.amount = event.money.amount;
+          money.category = event.money.category;
         }
       }
       await updateMoney();

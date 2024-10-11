@@ -7,29 +7,30 @@ import '../../../core/models/money.dart';
 import '../../../core/utils.dart';
 import '../../../core/widgets/buttons/cuper_button.dart';
 import '../../../core/widgets/buttons/primary_button.dart';
+import '../../../core/widgets/dialogs/delete_dialog.dart';
 import '../../../core/widgets/textfields/txt_field.dart';
 import '../../../core/widgets/texts/text_r.dart';
 import '../bloc/money_bloc.dart';
 import '../widgets/money_category_card.dart';
 
-class MoneyAddPage extends StatefulWidget {
-  const MoneyAddPage({
+class MoneyEditPage extends StatefulWidget {
+  const MoneyEditPage({
     super.key,
-    required this.expense,
+    required this.money,
   });
 
-  final bool expense;
+  final Money money;
 
   @override
-  State<MoneyAddPage> createState() => _MoneyAddPageState();
+  State<MoneyEditPage> createState() => _MoneyEditPageState();
 }
 
-class _MoneyAddPageState extends State<MoneyAddPage> {
+class _MoneyEditPageState extends State<MoneyEditPage> {
   final controller1 = TextEditingController();
   final controller2 = TextEditingController();
   final controller3 = TextEditingController();
 
-  bool active = false;
+  bool active = true;
   bool getSelected(String title) {
     return controller3.text == title;
   }
@@ -51,17 +52,42 @@ class _MoneyAddPageState extends State<MoneyAddPage> {
 
   void onDone() {
     context.read<MoneyBloc>().add(
-          AddMoneyEvent(
+          EditMoneyEvent(
             money: Money(
-              id: getCurrentTimestamp(),
+              id: widget.money.id,
               title: controller1.text,
               amount: int.tryParse(controller2.text) ?? 0,
               category: controller3.text,
-              expense: widget.expense,
+              expense: widget.money.expense,
             ),
           ),
         );
     context.pop();
+  }
+
+  void onDelete() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DeleteDialog(
+          title: widget.money.expense ? 'Delete Expense?' : 'Delete Income?',
+          onYes: () {
+            context
+                .read<MoneyBloc>()
+                .add(DeleteMoneyEvent(id: widget.money.id));
+            context.pop();
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller1.text = widget.money.title;
+    controller2.text = widget.money.amount.toString();
+    controller3.text = widget.money.category;
   }
 
   @override
@@ -84,7 +110,7 @@ class _MoneyAddPageState extends State<MoneyAddPage> {
               children: [
                 const SizedBox(width: 10),
                 TextB(
-                  widget.expense ? 'Add Expense' : 'Add Income',
+                  widget.money.expense ? 'Edit Expense' : 'Edit Income',
                   fontSize: 32,
                 ),
               ],
@@ -110,7 +136,8 @@ class _MoneyAddPageState extends State<MoneyAddPage> {
             const SizedBox(height: 8),
             TxtField(
               controller: controller2,
-              hintText: widget.expense ? 'Amount Expense' : 'Amount Income',
+              hintText:
+                  widget.money.expense ? 'Amount Expense' : 'Amount Income',
               number: true,
               length: 6,
               onChanged: checkActive,
@@ -122,7 +149,7 @@ class _MoneyAddPageState extends State<MoneyAddPage> {
               color: AppColors.black64,
             ),
             const SizedBox(height: 8),
-            if (widget.expense) ...[
+            if (widget.money.expense) ...[
               MoneyCategoryCard(
                 id: 7,
                 title: 'Investment ',
@@ -205,6 +232,12 @@ class _MoneyAddPageState extends State<MoneyAddPage> {
               title: 'Done',
               active: active,
               onPressed: onDone,
+            ),
+            const SizedBox(height: 16),
+            PrimaryButton(
+              title: 'Delete',
+              white: true,
+              onPressed: onDelete,
             ),
             const SizedBox(height: 16),
           ],

@@ -90,7 +90,7 @@ String getCategoryAsset(String cat) {
   if (cat == 'Dividends') return 'assets/cat4.svg';
   if (cat == 'Business') return 'assets/cat5.svg';
   if (cat == 'Rent') return 'assets/cat6.svg';
-  if (cat == 'Investment') return 'assets/cat7.svg';
+  if (cat == 'Investment ') return 'assets/cat7.svg';
   if (cat == 'Food') return 'assets/cat8.svg';
   if (cat == 'Transport') return 'assets/cat9.svg';
   if (cat == 'Rest') return 'assets/cat10.svg';

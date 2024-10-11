@@ -1,3 +1,4 @@
+import 'package:financetinkoffui/core/widgets/others/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -104,6 +105,10 @@ class _MainPageState extends State<MainPage> {
         BlocBuilder<MoneyBloc, MoneyState>(
           builder: (context, state) {
             if (state is MoneyLoadedState) {
+              if (state.money.isEmpty) {
+                return const NoData();
+              }
+
               return Expanded(
                 child: ListView(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
