@@ -2,8 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/config/app_colors.dart';
+import '../../../core/models/money.dart';
 import '../../../core/widgets/texts/text_r.dart';
-import '../pages/activities_page.dart';
 
 class ExpenseIncomeChart extends StatelessWidget {
   final List<Money> data;
@@ -12,17 +12,17 @@ class ExpenseIncomeChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double totalIncome =
-        data.where((d) => d.isIncome).fold(0, (sum, item) => sum + item.amount);
-    double totalExpense = data
-        .where((d) => !d.isIncome)
-        .fold(0, (sum, item) => sum + item.amount);
+    // double totalIncome =
+    //     data.where((d) => d.isIncome).fold(0, (sum, item) => sum + item.amount);
+    // double totalExpense = data
+    //     .where((d) => !d.isIncome)
+    //     .fold(0, (sum, item) => sum + item.amount);
 
-    double maxValue = totalIncome > totalExpense ? totalIncome : totalExpense;
+    // double maxValue = totalIncome > totalExpense ? totalIncome : totalExpense;
 
-    double normalizedIncome = maxValue > 0 ? (totalIncome / maxValue) * 104 : 0;
-    double normalizedExpense =
-        maxValue > 0 ? (totalExpense / maxValue) * 104 : 0;
+    // double normalizedIncome = maxValue > 0 ? (totalIncome / maxValue) * 104 : 0;
+    // double normalizedExpense =
+    //     maxValue > 0 ? (totalExpense / maxValue) * 104 : 0;
 
     return Center(
       child: Container(
@@ -67,7 +67,7 @@ class ExpenseIncomeChart extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         BarChartRodData(
-                          toY: normalizedIncome,
+                          toY: 111,
                           width: 17,
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8),
@@ -80,7 +80,7 @@ class ExpenseIncomeChart extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         BarChartRodData(
-                          toY: -normalizedExpense,
+                          toY: -111,
                           width: 17,
                           color: const Color(0xFF1F1F1F),
                           borderRadius: BorderRadius.circular(8),
